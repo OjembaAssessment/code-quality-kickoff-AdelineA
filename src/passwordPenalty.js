@@ -17,13 +17,12 @@ export default function penaltyPoints(password = "") {
   let regexMatch = /([a-zA-Z0-9])\1{1,}/g;
   let regex = new RegExp(regexMatch, "g");
   const sequences = password.match(regex);
-  
+
   if (sequences) {
     return sequences.reduce((penality, sequence) => {
       return (
         penality + (sequence.length === 2 ? 1 : sequence.length >= 3 ? 2 : 0)
-      )
+      );
     }, 0);
   }
-
 }
