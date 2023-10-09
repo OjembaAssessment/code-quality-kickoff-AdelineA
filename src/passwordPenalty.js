@@ -14,20 +14,16 @@ export default function penaltyPoints(password = "") {
   // * * * * * * * * * * * * * * * * * * * * * * * * * * * *
   //
 
-  const regex = /([a-zA-Z0-9])\1{1,}/g;
+  let regexMatch = /([a-zA-Z0-9])\1{1,}/g;
+  let regex = new RegExp(regexMatch, "g");
   const sequences = password.match(regex);
-
-  let penalityPoint = 0;
+  
   if (sequences) {
-    for (let sequence of sequences) {
-      const consecutiveCount = sequence.length - 1;
-      if (consecutiveCount === 2) {
-        penalityPoint += 1;
-      } else if (consecutiveCount >= 3) {
-        penalityPoint += 2;
-      }
-    }
+    return sequences.reduce((penality, sequence) => {
+      return (
+        penality + (sequence.length === 2 ? 1 : sequence.length >= 3 ? 2 : 0)
+      )
+    }, 0);
   }
 
-  return penalityPoint;
 }
