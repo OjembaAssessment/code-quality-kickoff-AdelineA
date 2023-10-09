@@ -13,14 +13,21 @@ export default function isValidPassword(password = "") {
   // * * * YOUR CODE GOES IN HERE ... * * *
 
   if (forbiddenPasswords.includes(password)) return false;
-  if (password.length !== 10) return false;
-  if (!/^[a-zA-Z0-9]$/.test(password)) return false;
+  // if (password.length !== 10) return false;
+  if (!/^[a-zA-Z0-9]{10}$/.test(password)) return false;
+  if (
+    !/[0-9]/.test(password) ||
+    !/[a-z]/.test(password) ||
+    !/[A-Z]/.test(password)
+  ) {
+    return false;
+  }
+
+  const sequencePattern =
+    /(?:0123|2345|3456|5678|6789|7890|0987|9876|8765|7654|6543|5432|4321|3210)/;
+  if (sequencePattern.test(password)) return false;
 
   const setOfPassword = new Set([...password]);
   if (setOfPassword.size < 4) return false;
   return true;
-
-  const hasOccurence = ()=>{
-    
-  }
 }
